@@ -497,7 +497,7 @@ function updateSim(){
   chart = new Chart(ctx,{
     type:'line',
     data:{datasets:[
-      {label:'예상 자산 (만원)',data:chartData,borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,0.1)',fill:true,tension:0.3,pointRadius:3},
+      {label:'예상 자산',data:chartData,borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,0.1)',fill:true,tension:0.3,pointRadius:3},
       {label:'총 투자원금',data:chartData.map((p,i)=>({x:p.x,y:(monthly*12*(i+1))/10000})),borderColor:'#94a3b8',borderDash:[5,5],pointRadius:0,fill:false,tension:0},
     ]},
     options:{
@@ -505,7 +505,7 @@ function updateSim(){
       plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}}},
       scales:{
         x:{type:'linear',title:{text:'연도',display:true,color:'#94a3b8'},ticks:{color:'#94a3b8',callback:v=>v+'년'},grid:{color:'#1e293b'}},
-        y:{title:{text:'만원',display:true,color:'#94a3b8'},ticks:{color:'#94a3b8',callback:v=>(v/10000).toFixed(0)+'억'},grid:{color:'#1e293b'}}
+        y:{title:{text:'',display:false},ticks:{color:'#94a3b8',callback:v=>(v/10000).toFixed(0)+'억원'},grid:{color:'#1e293b'}}
       }
     }
   });
