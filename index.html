@@ -200,6 +200,12 @@ function buildUI(){
   });
 }
 
+function formatKRW(won){
+  if(Math.abs(won) >= 100000000) return (won/100000000).toFixed(1).replace(/\.0$/,'')+'억원';
+  if(Math.abs(won) >= 10000) return Math.round(won/10000).toLocaleString()+'만원';
+  return won.toLocaleString()+'원';
+}
+
 function updateSim(){
   const years = +document.getElementById('years').value;
   const monthly = +document.getElementById('monthly').value * 10000;
@@ -208,7 +214,7 @@ function updateSim(){
   const acc = ACCOUNT_TYPES.find(a=>a.id===selectedAccount);
 
   document.getElementById('yearsVal').textContent = years+'년';
-  document.getElementById('monthlyVal').textContent = (+document.getElementById('monthly').value)+'만원';
+  document.getElementById('monthlyVal').textContent = formatKRW((+document.getElementById('monthly').value)*10000);
   document.getElementById('rateVal').textContent = (+document.getElementById('returnRate').value)+'%';
   document.getElementById('divRateVal').textContent = (+document.getElementById('divRate').value)+'%';
 
@@ -274,10 +280,10 @@ function updateSim(){
 
   // 결과 카드
   document.getElementById('resultCards').innerHTML = `
-    <div class="r-card"><div class="label">💰 총 투자금</div><div class="value value-blue">${(totalInvested/10000).toLocaleString()}만</div></div>
-    <div class="r-card"><div class="label">📈 최종 자산</div><div class="value value-green">${(finalBalance/10000).toLocaleString()}만</div><div class="sub">ROI ${roi}%</div></div>
-    <div class="r-card"><div class="label">💸 누적 배당금</div><div class="value value-yellow">${(Math.round(cumulativeDiv)/10000).toLocaleString()}만</div></div>
-    <div class="r-card"><div class="label">🏛 절감 세금</div><div class="value value-purple">${acc.id==='general'?'0':(Math.round(cumulativeDiv*0.154-finalTax)/10000).toLocaleString()+((Math.round(cumulativeDiv*0.154-finalTax)/10000)>0?'만':'만')}</div><div class="sub">vs 일반계좌</div></div>
+    <div class="r-card"><div class="label">💰 총 투자금</div><div class="value value-blue">${formatKRW(totalInvested)}</div></div>
+    <div class="r-card"><div class="label">📈 최종 자산</div><div class="value value-green">${formatKRW(finalBalance)}</div><div class="sub">ROI ${roi}%</div></div>
+    <div class="r-card"><div class="label">💸 누적 배당금</div><div class="value value-yellow">${formatKRW(Math.round(cumulativeDiv))}</div></div>
+    <div class="r-card"><div class="label">🏛 절감 세금</div><div class="value value-purple">${acc.id==='general'?'0원':formatKRW(Math.round(cumulativeDiv*0.154)-finalTax)}</div><div class="sub">vs 일반계좌</div></div>
   `;
 
   // 차트
@@ -318,9 +324,9 @@ function updateSim(){
   // 상세 테이블
   let tableHtml = `<table><thead><tr><th>연도</th><th>투자원금</th><th>자산</th><th>누적배당</th><th>납부세금</th><th>순수익</th></tr></thead><tbody>`;
   points.forEach(p=>{
-    tableHtml += `<tr><td>${p.year}년차</td><td>${(p.invested/10000).toLocaleString()}만</td><td>${(p.balance/10000).toLocaleString()}만</td><td>${(Math.round(p.div)/10000).toLocaleString()}만</td><td>${(p.tax/10000).toLocaleString()}만</td><td class="saved">${((p.balance-p.invested-p.tax)/10000).toLocaleString()}만</td></tr>`;
+    tableHtml += `<tr><td>${p.year}년차</td><td>${formatKRW(p.invested)}</td><td>${formatKRW(p.balance)}</td><td>${formatKRW(Math.round(p.div))}</td><td>${formatKRW(p.tax)}</td><td class="saved">${formatKRW(p.balance-p.invested-p.tax)}</td></tr>`;
   });
-  tableHtml += `<tr><td><strong>최종</strong></td><td><strong>${(totalInvested/10000).toLocaleString()}만</strong></td><td><strong>${(finalBalance/10000).toLocaleString()}만</strong></td><td><strong>${(Math.round(cumulativeDiv)/10000).toLocaleString()}만</strong></td><td><strong>${(Math.round(cumulativeTaxDiv+finalTax)/10000).toLocaleString()}만</strong></td><td class="saved"><strong>${(totalGain/10000).toLocaleString()}만</strong></td></tr></tbody></table>`;
+  tableHtml += `<tr><td><strong>최종</strong></td><td><strong>${formatKRW(totalInvested)}</strong></td><td><strong>${formatKRW(finalBalance)}</strong></td><td><strong>${formatKRW(Math.round(cumulativeDiv))}</strong></td><td><strong>${formatKRW(Math.round(cumulativeTaxDiv+finalTax))}</strong></td><td class="saved"><strong>${formatKRW(totalGain)}</strong></td></tr></tbody></table>`;
   document.getElementById('breakdown').innerHTML = tableHtml;
 }
 
