@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ETF 투자에 적합한 국내 증권사 비교 — 수수료, ISA 지원, 해외ETF 거래, 모바일 앱 평점까지 한눈에">
+<title>증권사 ETF 수수료 비교 | ETF 적립식 투자 시뮬레이터</title>
+<style>
+  :root{--bg:#0f172a;--card:#1e293b;--border:#334155;--text:#e2e8f0;--muted:#94a3b8;--red:#ef4444;--yellow:#eab308;--green:#22c55e;--blue:#3b82f6}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .container{max-width:1100px;margin:0 auto;padding:20px}
+  header{text-align:center;padding:50px 0 30px}
+  h1{font-size:2rem;margin-bottom:8px}
+  h2{font-size:1.3rem;color:var(--muted);font-weight:400;margin-bottom:24px}
+
+  .table-wrap{overflow-x:auto;margin:30px 0;border-radius:12px;border:1px solid var(--border)}
+  table{width:100%;border-collapse:collapse;min-width:700px}
+  th,td{padding:14px 16px;text-align:center;font-size:.9rem}
+  th{background:var(--card);font-weight:600;color:var(--muted);position:sticky;top:0}
+  th:first-child,td:first-child{text-align:left}
+  td{border-top:1px solid var(--border)}
+  tr:hover td{background:#1a2744}
+  .best{color:var(--green);font-weight:700}
+  .note{color:var(--muted);font-size:.75rem}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:30px 0}
+  .card{background:var(--card);border-radius:12px;padding:24px;border:1px solid var(--border)}
+  .card h3{font-size:1.1rem;margin-bottom:12px}
+  .card p,.card li{color:var(--muted);font-size:.9rem}
+  .card ul{margin:12px 0 0 18px}
+  .card li{margin-bottom:4px}
+
+  footer{text-align:center;padding:40px 0;color:var(--muted);font-size:.8rem;border-top:1px solid var(--border);margin-top:40px}
+  footer a{color:var(--blue);text-decoration:none}
+
+  @media(max-width:768px){.container{padding:12px}header h1{font-size:1.4rem}th,td{padding:8px 6px;font-size:.75rem}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>국내 증권사 ETF 수수료 비교</h1>
+  <h2>ETF 적립식 투자에 최적화된 증권사 찾기 — 수수료·ISA·해외ETF까지</h2>
+  <div style="margin-top:12px">
+    <a href="./" style="color:var(--blue);font-size:.9rem">← ETF 시뮬레이터로 돌아가기</a>
+  </div>
+</header>
+
+<h2 style="margin-top:20px">주요 증권사 ETF 거래 수수료</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+  <th>증권사</th>
+  <th>국내 ETF</th>
+  <th>해외 ETF</th>
+  <th>ISA 계좌</th>
+  <th>최소 입금</th>
+  <th>특징</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>키움증권</strong></td>
+  <td class="best">0.01%</td>
+  <td>0.07%</td>
+  <td class="best">지원</td>
+  <td>없음</td>
+  <td>국내 ETF 평생 무료 이벤트, 영웅문 앱</td>
+</tr>
+<tr>
+  <td><strong>미래에셋</strong></td>
+  <td class="best">0.01%</td>
+  <td>0.07%</td>
+  <td class="best">지원</td>
+  <td>없음</td>
+  <td>ISA 최초 개설 시 1만원 지원, 해외ETF 자동매수</td>
+</tr>
+<tr>
+  <td><strong>한국투자</strong></td>
+  <td class="best">0.01%</td>
+  <td>0.09%</td>
+  <td class="best">지원</td>
+  <td>없음</td>
+  <td>해외주식 90일 무료, 연금계좌 ETF 투자 강점</td>
+</tr>
+<tr>
+  <td><strong>KB증권</strong></td>
+  <td>0.015%</td>
+  <td>0.07%</td>
+  <td class="best">지원</td>
+  <td>없음</td>
+  <td>국내 ETF 매수 무료, KB국민은행 연계 편의성</td>
+</tr>
+<tr>
+  <td><strong>토스증권</strong></td>
+  <td class="best">0.01%</td>
+  <td class="best">0.05%</td>
+  <td>미지원</td>
+  <td>없음</td>
+  <td>해외ETF 소수점 거래, 초보자 친화적 UI</td>
+</tr>
+<tr>
+  <td><strong>삼성증권</strong></td>
+  <td>0.01%</td>
+  <td>0.09%</td>
+  <td class="best">지원</td>
+  <td>없음</td>
+  <td>삼성자산운용 ETF와 연계, mPOP 앱</td>
+</tr>
+<tr>
+  <td><strong>NH투자증권</strong></td>
+  <td>0.01%</td>
+  <td>0.09%</td>
+  <td class="best">지원</td>
+  <td>없음</td>
+  <td>농협은행 연계, 퇴직연금 ETF 강점</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="cards">
+  <div class="card">
+    <h3>ETF 적립식 투자 추천</h3>
+    <ul>
+      <li><strong>저비용 우선:</strong> 키움증권·미래에셋 (국내 ETF 0.01%)</li>
+      <li><strong>ISA 활용:</strong> 키움·미래에셋·한국투자 (ISA 지원 + 저수수료)</li>
+      <li><strong>해외 ETF 위주:</strong> 토스증권 (해외 0.05% 최저가)</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>계좌 개설 전 확인사항</h3>
+    <ul>
+      <li>모바일 앱으로 비대면 개설 (5분 소요)</li>
+      <li>해외 ETF 거래는 별도 신청 필요</li>
+      <li>ISA 계좌는 1인 1계좌만 가능 (3년 의무)</li>
+      <li>수수료 이벤트는 수시로 변경되니 확인</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>IRP·연금저축 ETF</h3>
+    <ul>
+      <li>IRP는 <strong>한국투자·미래에셋</strong> 강세</li>
+      <li>연금저축 ETF는 대부분 증권사 지원</li>
+      <li>연말 세액공제 최대 148만원 (IRP 900만원 기준)</li>
+      <li>퇴직연금(DC·DB) ETF는 NH·삼성 강점</li>
+    </ul>
+  </div>
+</div>
+
+<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin:30px 0">
+  <h3 style="color:var(--yellow);margin-bottom:12px">유의사항</h3>
+  <p style="color:var(--muted);font-size:.9rem">
+    수수료는 2026년 6월 기준 온라인 매매 기준입니다. 각 증권사의 이벤트·프로모션에 따라 실제 수수료는 달라질 수 있어요.<br>
+    ISA·IRP·연금저축 계좌의 세제 혜택은 개인 소득·납입액에 따라 다르므로, 가입 전 반드시 해당 증권사와 상담하세요.<br>
+    본 페이지의 정보는 참고용이며, 특정 증권사를 추천하거나 보증하지 않습니다.
+  </p>
+</div>
+
+<footer>
+  © 2026 ETF 적립식 투자 시뮬레이터 · 
+  <a href="https://github.com/hwan7256/etf-simulator" target="_blank">GitHub</a>
+</footer>
+
+</div>
+</body>
+</html>
