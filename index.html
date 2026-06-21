@@ -118,9 +118,50 @@ footer a{color:var(--blue);text-decoration:none}
   </nav>
 </header>
 
+<!-- 시뮬레이터 영역 -->
+<div class="simulator-section" id="simulator">
+  <h2>🧮 적립식 ETF 투자 시뮬레이터</h2>
+  <p class="sim-desc">원하는 ETF와 계좌 유형을 선택하고, 월 적립금과 투자 기간을 조절해보세요. 모든 계산은 브라우저에서 실시간으로 이루어집니다.</p>
+
+<div class="grid">
+<div>
+  <div class="panel">
+    <h2>🛠️ 투자 설정</h2>
+    <label>📊 ETF 선택 (복수 가능)</label>
+    <div class="etf-list" id="etfList"></div>
+    <label>📅 투자기간</label>
+    <input type="range" id="years" min="1" max="40" value="20" oninput="updateSim()">
+    <div class="range-value" id="yearsVal">20년</div>
+    <label>💵 월 적립금 (만원)</label>
+    <input type="range" id="monthly" min="10" max="500" value="50" step="5" oninput="updateSim()">
+    <div class="range-value" id="monthlyVal">50만원</div>
+    <label>🏦 계좌 유형</label>
+    <div class="account-tabs" id="accountTabs"></div>
+    <label>📈 연평균 수익률 가정</label>
+    <input type="range" id="returnRate" min="3" max="20" value="8" step="0.5" oninput="updateSim()">
+    <div class="range-value" id="rateVal">8%</div>
+    <div id="divInfo" style="margin-top:16px;background:var(--bg);border-radius:8px;padding:12px;font-size:.85rem;color:var(--muted)">
+      💸 <strong id="divPct">1.1%</strong> — 선택 ETF 평균 배당률 (자동 계산)
+    </div>
+  </div>
+</div>
+<div>
+  <div class="result-cards" id="resultCards"></div>
+  <div class="chart-wrap">
+    <h3>📊 연도별 자산 증가 추이</h3>
+    <canvas id="chart" height="300"></canvas>
+  </div>
+  <div style="margin-top:16px" class="panel">
+    <h2>📋 연도별 상세 (5년 단위)</h2>
+    <div class="breakdown-table" id="breakdown"></div>
+  </div>
+</div>
+</div>
+</div>
+
 <!-- 블로그 포스트 영역 -->
 <div class="blog-section" id="blog">
-  <h2>📝 최신 ETF 투자 가이드</h2>
+  <h2>📝 ETF 투자 가이드 & 블로그</h2>
   <div class="post-grid">
     <a href="blog/etf-beginner-guide.html" class="post-card">
       <div class="card-img">🌱</div>
@@ -213,47 +254,6 @@ footer a{color:var(--blue);text-decoration:none}
       </div>
     </a>
   </div>
-</div>
-
-<!-- 시뮬레이터 영역 -->
-<div class="simulator-section" id="simulator">
-  <h2>🧮 적립식 ETF 투자 시뮬레이터</h2>
-  <p class="sim-desc">원하는 ETF와 계좌 유형을 선택하고, 월 적립금과 투자 기간을 조절해보세요. 모든 계산은 브라우저에서 실시간으로 이루어집니다.</p>
-
-<div class="grid">
-<div>
-  <div class="panel">
-    <h2>🛠️ 투자 설정</h2>
-    <label>📊 ETF 선택 (복수 가능)</label>
-    <div class="etf-list" id="etfList"></div>
-    <label>📅 투자기간</label>
-    <input type="range" id="years" min="1" max="40" value="20" oninput="updateSim()">
-    <div class="range-value" id="yearsVal">20년</div>
-    <label>💵 월 적립금 (만원)</label>
-    <input type="range" id="monthly" min="10" max="500" value="50" step="5" oninput="updateSim()">
-    <div class="range-value" id="monthlyVal">50만원</div>
-    <label>🏦 계좌 유형</label>
-    <div class="account-tabs" id="accountTabs"></div>
-    <label>📈 연평균 수익률 가정</label>
-    <input type="range" id="returnRate" min="3" max="20" value="8" step="0.5" oninput="updateSim()">
-    <div class="range-value" id="rateVal">8%</div>
-    <div id="divInfo" style="margin-top:16px;background:var(--bg);border-radius:8px;padding:12px;font-size:.85rem;color:var(--muted)">
-      💸 <strong id="divPct">1.1%</strong> — 선택 ETF 평균 배당률 (자동 계산)
-    </div>
-  </div>
-</div>
-<div>
-  <div class="result-cards" id="resultCards"></div>
-  <div class="chart-wrap">
-    <h3>📊 연도별 자산 증가 추이</h3>
-    <canvas id="chart" height="300"></canvas>
-  </div>
-  <div style="margin-top:16px" class="panel">
-    <h2>📋 연도별 상세 (5년 단위)</h2>
-    <div class="breakdown-table" id="breakdown"></div>
-  </div>
-</div>
-</div>
 </div>
 
 <!-- FAQ -->
