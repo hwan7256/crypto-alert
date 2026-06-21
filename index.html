@@ -109,9 +109,9 @@ footer a{color:var(--blue);text-decoration:none}
     <input type="range" id="returnRate" min="3" max="20" value="8" step="0.5" oninput="updateSim()">
     <div class="range-value" id="rateVal">8%</div>
 
-    <label>💸 연평균 배당률 가정</label>
-    <input type="range" id="divRate" min="1" max="8" value="4" step="0.5" oninput="updateSim()">
-    <div class="range-value" id="divRateVal">4%</div>
+    <div id="divInfo" style="margin-top:16px;background:var(--bg);border-radius:8px;padding:12px;font-size:.85rem;color:var(--muted)">
+      💸 <strong id="divPct">1.1%</strong> — 선택 ETF 평균 배당률 (자동 계산)
+    </div>
   </div>
 </div>
 
@@ -210,18 +210,18 @@ function updateSim(){
   const years = +document.getElementById('years').value;
   const monthly = +document.getElementById('monthly').value * 10000;
   const annualReturn = +document.getElementById('returnRate').value / 100;
-  const divYield = +document.getElementById('divRate').value / 100;
   const acc = ACCOUNT_TYPES.find(a=>a.id===selectedAccount);
 
   document.getElementById('yearsVal').textContent = years+'년';
   document.getElementById('monthlyVal').textContent = formatKRW((+document.getElementById('monthly').value)*10000);
   document.getElementById('rateVal').textContent = (+document.getElementById('returnRate').value)+'%';
-  document.getElementById('divRateVal').textContent = (+document.getElementById('divRate').value)+'%';
+  const acc = ACCOUNT_TYPES.find(a=>a.id===selectedAccount);
 
-  // 선택된 ETF 계산
+  // 선택된 ETF 계산 (먼저 해야 배당률을 알 수 있음)
   const etfs = [...selectedEtfs].map(id=>ETF_DATA.find(e=>e.id===id));
-  if(etfs.length===0) etfs.push(ETF_DATA[0]); // fallback
+  if(etfs.length===0) etfs.push(ETF_DATA[0]);
   const avgDiv = etfs.reduce((s,e)=>s+e.div,0)/etfs.length/100;
+  document.getElementById('divPct').textContent = (avgDiv*100).toFixed(1)+'%';
 
   // 시뮬레이션
   let totalInvested = 0;
