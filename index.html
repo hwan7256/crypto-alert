@@ -194,7 +194,7 @@ footer a{color:var(--blue);text-decoration:none}
     <label>계좌 유형</label>
     <div class="account-tabs" id="accountTabs"></div>
     <label>연평균 수익률 가정 <button onclick="useHistoricalReturn()" style="font-size:.7rem;background:var(--blue);color:#fff;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin-left:8px">과거 평균 적용</button></label>
-    <input type="range" id="returnRate" min="3" max="20" value="8" step="0.5" oninput="updateSim()">
+    <input type="range" id="returnRate" min="1" max="25" value="8" step="0.5" oninput="updateSim()">
     <div class="range-value" id="rateVal">8%</div>
     <div id="divInfo" style="margin-top:16px;background:var(--bg);border-radius:8px;padding:12px;font-size:.85rem;color:var(--muted)">
       <strong id="divPct">1.1%</strong> — 선택 ETF 평균 배당률 (자동 계산)<br>
@@ -372,6 +372,12 @@ const ETF_DATA = [
   {id:'KODEX', name:'KODEX 나스닥', desc:'한국판 나스닥100', yr:16.5, div:0.6, region:'KR',   currency:'KRW'},
   {id:'ACE',   name:'ACE 미국배당', desc:'한국판 SCHD',      yr:9.8,  div:4.2, region:'KR',   currency:'KRW'},
   {id:'TIG_US',name:'TIGER 미국30년',desc:'미국 장기국채',   yr:1.8,  div:4.5, region:'US',   currency:'USD'},
+  {id:'IWM',   name:'러셀2000',     desc:'미국 소형주 2000', yr:8.5,  div:1.2, region:'US',   currency:'USD'},
+  {id:'DIA',   name:'다우지수',     desc:'미국 우량주 30',   yr:10.5, div:1.8, region:'US',   currency:'USD'},
+  {id:'TLT',   name:'미국 장기채20년',desc:'아이셰어즈 20년국채',yr:0.3,div:4.2, region:'US',   currency:'USD'},
+  {id:'GLD',   name:'금',           desc:'SPDR 골드 트러스트',yr:6.8, div:0.0,  region:'Global',currency:'USD'},
+  {id:'VWO',   name:'신흥국',       desc:'뱅가드 이머징마켓', yr:3.5,  div:2.5, region:'Global',currency:'USD'},
+  {id:'SOXX',  name:'반도체',       desc:'아이셰어즈 반도체', yr:23.0, div:0.8, region:'US',   currency:'USD'},
 ];
 const ACCOUNT_TYPES = [
   {id:'general',  title:'일반계좌',  desc:'세금 15.4%',     taxDiv:0.154, taxGain:0,    limit:Infinity, taxDeferred:false},
