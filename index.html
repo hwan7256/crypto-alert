@@ -3,205 +3,329 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="국내외 주요 가상자산 거래소의 유의종목 지정 기준 및 상장폐지 데이터를 한눈에 비교하는 프리미엄 정보 사이트">
-<title>크립토 유의종목 알림 | 거래소별 상장폐지 기준 비교</title>
+<title>적립식 ETF 투자 시뮬레이터 | 크립토 유의종목 알림</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-  :root{--bg:#0f172a;--card:#1e293b;--border:#334155;--text:#e2e8f0;--muted:#94a3b8;--red:#ef4444;--yellow:#eab308;--green:#22c55e;--blue:#3b82f6}
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-  .container{max-width:1100px;margin:0 auto;padding:20px}
-  header{text-align:center;padding:50px 0 30px}
-  h1{font-size:2rem;margin-bottom:8px}
-  h2{font-size:1.3rem;color:var(--muted);font-weight:400;margin-bottom:24px}
-  .tag{display:inline-block;background:var(--border);color:var(--yellow);padding:4px 12px;border-radius:20px;font-size:.8rem;margin:0 4px 8px}
-  
-  /* ── Table ── */
-  .table-wrap{overflow-x:auto;margin:30px 0;border-radius:12px;border:1px solid var(--border)}
-  table{width:100%;border-collapse:collapse;min-width:700px}
-  th,td{padding:14px 16px;text-align:left;font-size:.9rem}
-  th{background:var(--card);font-weight:600;color:var(--muted);position:sticky;top:0}
-  td{border-top:1px solid var(--border)}
-  tr:hover td{background:#1a2744}
-  .badge{display:inline-block;padding:3px 10px;border-radius:6px;font-size:.75rem;font-weight:600}
-  .badge-red{background:#7f1d1d;color:#fca5a5}.badge-yellow{background:#713f12;color:#fde047}.badge-green{background:#14532d;color:#86efac}
-  
-  /* ── Cards ── */
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:30px 0}
-  .card{background:var(--card);border-radius:12px;padding:24px;border:1px solid var(--border)}
-  .card h3{font-size:1.1rem;margin-bottom:12px}
-  .card p{color:var(--muted);font-size:.9rem}
-  
-  footer{text-align:center;padding:40px 0;color:var(--muted);font-size:.8rem}
-  footer a{color:var(--blue);text-decoration:none}
-  
-  .soon{opacity:.5;pointer-events:none}
-  .coming{display:inline-block;background:var(--blue);color:#fff;padding:2px 8px;border-radius:4px;font-size:.7rem;margin-left:8px}
+:root{--bg:#0f172a;--card:#1e293b;--border:#334155;--text:#e2e8f0;--muted:#94a3b8;--green:#22c55e;--blue:#3b82f6;--red:#ef4444;--yellow:#eab308;--purple:#a855f7}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.container{max-width:1200px;margin:0 auto;padding:20px}
+header{text-align:center;padding:40px 0 20px}
+h1{font-size:2rem;margin-bottom:8px}
+.breadcrumb{color:var(--muted);font-size:.85rem;margin-bottom:30px}
+.breadcrumb a{color:var(--blue);text-decoration:none}
+
+/* Layout */
+.grid{display:grid;grid-template-columns:400px 1fr;gap:20px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+
+/* Panel */
+.panel{background:var(--card);border-radius:12px;padding:24px;border:1px solid var(--border)}
+.panel h2{font-size:1.1rem;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+
+/* Form elements */
+label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:4px;margin-top:16px}
+select,input[type=range]{width:100%;padding:10px 12px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:8px;font-size:.9rem;margin-top:4px}
+input[type=range]{padding:0;height:6px;-webkit-appearance:none;appearance:none;background:var(--border);border-radius:3px;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;background:var(--blue);border-radius:50%;cursor:pointer}
+.range-value{text-align:right;color:var(--blue);font-weight:700;font-size:1.1rem;margin-top:2px}
+
+select:focus{outline:2px solid var(--blue);border-color:var(--blue)}
+
+/* ETF multi-select */
+.etf-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.etf-chip{background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:8px 14px;cursor:pointer;transition:.15s;user-select:none;font-size:.85rem;display:flex;align-items:center;gap:6px}
+.etf-chip:hover{border-color:var(--blue)}
+.etf-chip.selected{border-color:var(--blue);background:#1a2744}
+.etf-chip .name{font-weight:600}
+.etf-chip .yield{color:var(--muted);font-size:.75rem}
+.etf-chip .check{display:none;color:var(--blue);font-size:.8rem}
+.etf-chip.selected .check{display:inline}
+
+/* Account type */
+.account-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.account-tab{flex:1;min-width:80px;background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:10px 6px;cursor:pointer;text-align:center;font-size:.8rem;transition:.15s}
+.account-tab:hover{border-color:var(--blue)}
+.account-tab.selected{border-color:var(--purple);background:#1a1f3d}
+.account-tab .title{font-weight:700;display:block}
+.account-tab .desc{color:var(--muted);font-size:.7rem;display:block;margin-top:2px}
+
+/* Result cards */
+.result-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
+.r-card{background:var(--card);border-radius:10px;padding:16px;text-align:center;border:1px solid var(--border)}
+.r-card .label{color:var(--muted);font-size:.8rem;margin-bottom:4px}
+.r-card .value{font-size:1.6rem;font-weight:800}
+.r-card .sub{color:var(--muted);font-size:.75rem;margin-top:2px}
+.value-green{color:var(--green)}.value-blue{color:var(--blue)}.value-purple{color:var(--purple)}.value-yellow{color:var(--yellow)}
+
+/* Chart */
+.chart-wrap{background:var(--card);border-radius:12px;padding:20px;border:1px solid var(--border)}
+.chart-wrap h3{font-size:.95rem;color:var(--muted);margin-bottom:16px}
+
+/* Table */
+.breakdown-table{overflow-x:auto;margin-top:16px}
+.breakdown-table table{width:100%;border-collapse:collapse;font-size:.85rem}
+.breakdown-table th,.breakdown-table td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:right}
+.breakdown-table th{color:var(--muted);font-weight:600;text-align:right}
+.breakdown-table td:first-child,.breakdown-table th:first-child{text-align:left}
+.breakdown-table tr:last-child td{border-bottom:none;font-weight:700}
+.breakdown-table .saved{color:var(--green)}
+
+footer{text-align:center;padding:40px 0;color:var(--muted);font-size:.8rem}
+footer a{color:var(--blue);text-decoration:none}
+
+@media(max-width:600px){.result-cards{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 <div class="container">
 
 <header>
-  <h1>📊 크립토 유의종목 알림</h1>
-  <h2>국내외 거래소별 상장폐지 기준 & 유의종목 지정 가이드라인</h2>
-  <div style="margin-top:12px">
-    <span class="tag">업비트</span><span class="tag">빗썸</span><span class="tag">코인원</span><span class="tag">코빗</span><span class="tag">바이낸스</span>
-  </div>
+  <h1>📈 적립식 ETF 투자 시뮬레이터</h1>
+  <p class="breadcrumb">ETF 10종 · ISA/IRP/연금저축 · 배당금·세금까지 | <a href="/delisting.html">거래소 비교표</a> · <a href="/privacy.html">개인정보처리방침</a></p>
 </header>
 
-<!-- 거래소별 기준 비교표 -->
-<h2 style="margin-top:20px">📋 거래소별 유의종목·상장폐지 기준</h2>
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-  <th>거래소</th>
-  <th>유의종목 지정 기준</th>
-  <th>상장폐지 사유</th>
-  <th>공지→폐지 소요</th>
-  <th>투자자 보호</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td><strong>업비트</strong><br><span style="color:var(--muted);font-size:.8rem">Upbit</span></td>
-  <td>
-    • 유통량 공시 불일치<br>
-    • 개발 로드맵 미이행<br>
-    • 프로젝트 팀 리스크<br>
-    • 거래량 급감 (30일 평균 ↓90%)
-  </td>
-  <td>
-    <span class="badge badge-red">중대 사유</span> 즉시 폐지<br>
-    <span class="badge badge-yellow">유의</span> → 1주일 내 개선 없을 시 폐지<br>
-    ※ 2024년부터 유의종목→투자주의 전환
-  </td>
-  <td>보통 <strong>7~14일</strong></td>
-  <td>
-    • 거래지원 종료 전 출금 지원<br>
-    • 종료 공지 후 30일간 출금 가능<br>
-    • 에어드롭·포크 미지원
-  </td>
-</tr>
-<tr>
-  <td><strong>빗썸</strong><br><span style="color:var(--muted);font-size:.8rem">Bithumb</span></td>
-  <td>
-    • 소스코드 미공개<br>
-    • 기술적 보안 취약점<br>
-    • 시세조종 의심 거래<br>
-    • 유통 물량 과다
-  </td>
-  <td>
-    <span class="badge badge-red">중대 사유</span> 즉시 상폐<br>
-    <span class="badge badge-yellow">유의</span> → 정기 심의 결정
-  </td>
-  <td>보통 <strong>7~30일</strong></td>
-  <td>
-    • 거래지원 종료일까지 매도 가능<br>
-    • 종료 후 일정 기간 출금 지원<br>
-    • 공지사항 개별 확인 필수
-  </td>
-</tr>
-<tr>
-  <td><strong>코인원</strong><br><span style="color:var(--muted);font-size:.8rem">Coinone</span></td>
-  <td>
-    • 사업 지속성 의심<br>
-    • 자금세탁방지(AML) 위반<br>
-    • 법적 분쟁 발생<br>
-    • 시장 유동성 부족
-  </td>
-  <td>
-    <span class="badge badge-yellow">유의종목</span> 지정 → 모니터링<br>
-    개선 없을 시 거래지원 종료
-  </td>
-  <td>보통 <strong>14~30일</strong></td>
-  <td>
-    • 유의종목 지정 즉시 공지<br>
-    • 거래지원 종료 시 출금만 가능<br>
-    • 고객 고지 의무 철저
-  </td>
-</tr>
-<tr>
-  <td><strong>코빗</strong><br><span style="color:var(--muted);font-size:.8rem">Korbit</span></td>
-  <td>
-    • 기술적 안정성 문제<br>
-    • 규제 미준수<br>
-    • 투자자 피해 발생<br>
-    • 사업 운영 능력 부족
-  </td>
-  <td>
-    <span class="badge badge-yellow">거래유의</span> → 심사 강화<br>
-    개선 실패 시 거래지원 종료
-  </td>
-  <td>보통 <strong>14일 이상</strong></td>
-  <td>
-    • 거래유의 단계별 안내<br>
-    • 출금 기간 충분히 보장<br>
-    • 투자자 문의 채널 운영
-  </td>
-</tr>
-<tr>
-  <td><strong>바이낸스</strong><br><span style="color:var(--muted);font-size:.8rem">Binance</span></td>
-  <td>
-    • <span class="badge badge-yellow">모니터링 태그</span> 부착<br>
-    • 거래량·유동성 급감<br>
-    • 네트워크 불안정<br>
-    • 프로젝트 팀 무응답<br>
-    • 규제 위험 증가
-  </td>
-  <td>
-    <span class="badge badge-yellow">Seed Tag</span> → 모니터링<br>
-    <span class="badge badge-red">Delist</span> → 거래 중단<br>
-    ※ 모니터링→상폐까지 정기 리뷰
-  </td>
-  <td>보통 <strong>7~30일</strong></td>
-  <td>
-    • Seed Tag 종목 투자 위험 고지<br>
-    • 상폐 시 충분한 공지 기간<br>
-    • 타 거래소 이전 가능
-  </td>
-</tr>
-</tbody>
-</table>
-</div>
+<div class="grid">
+<!-- ── 좌측: 설정 패널 ── -->
+<div>
+  <div class="panel">
+    <h2>🛠️ 투자 설정</h2>
 
-<!-- 요약 카드 -->
-<div class="cards">
-  <div class="card">
-    <h3>⚡ 유의종목이란?</h3>
-    <p>거래소가 투자자 보호를 위해 지정하는 <strong>위험 종목</strong>입니다. 유의종목으로 지정되면 가격 급락과 출금 제한이 발생할 수 있어요. 지정 사유를 반드시 확인하세요.</p>
-  </div>
-  <div class="card">
-    <h3>🚨 대응 요령</h3>
-    <p>① 거래소 공지 즉시 확인<br>② 원금 일부라도 회수 결정<br>③ 출금 가능한 지갑으로 이동<br>④ 타 거래소 상장 여부 확인</p>
-  </div>
-  <div class="card">
-    <h3>📈 적립식 ETF 시뮬레이터</h3>
-    <p>ETF·ISA·IRP 계좌별 세금 혜택을 반영한 <strong>장기 투자 수익 시뮬레이션</strong>을 직접 해보세요. <a href="/simulator.html" style="color:var(--blue)">바로가기 →</a></p>
-  </div>
-  <div class="card">
-    <h3>🔜 상폐빔 시뮬레이터</h3>
-    <p>거래소별 수수료와 예상 슬리피지를 고려한 <strong>손익 계산기</strong>를 준비 중입니다. <span class="coming">Coming Soon</span></p>
+    <label>📊 ETF 선택 (복수 가능)</label>
+    <div class="etf-list" id="etfList"></div>
+
+    <label>📅 투자기간</label>
+    <input type="range" id="years" min="1" max="40" value="20" oninput="updateSim()">
+    <div class="range-value" id="yearsVal">20년</div>
+
+    <label>💵 월 적립금 (만원)</label>
+    <input type="range" id="monthly" min="10" max="500" value="50" step="5" oninput="updateSim()">
+    <div class="range-value" id="monthlyVal">50만원</div>
+
+    <label>🏦 계좌 유형</label>
+    <div class="account-tabs" id="accountTabs"></div>
+
+    <label>📈 연평균 수익률 가정</label>
+    <input type="range" id="returnRate" min="3" max="20" value="8" step="0.5" oninput="updateSim()">
+    <div class="range-value" id="rateVal">8%</div>
+
+    <label>💸 연평균 배당률 가정</label>
+    <input type="range" id="divRate" min="1" max="8" value="4" step="0.5" oninput="updateSim()">
+    <div class="range-value" id="divRateVal">4%</div>
   </div>
 </div>
 
-<!-- 면책조항 -->
-<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin:30px 0">
-  <h3 style="color:var(--yellow);margin-bottom:12px">⚠️ 투자자 유의사항</h3>
-  <p style="color:var(--muted);font-size:.9rem">
-    본 사이트는 정보 제공 목적으로만 운영되며, 투자 권유·추천을 하지 않습니다.<br>
-    가상자산은 높은 변동성과 원금 손실 가능성이 있는 고위험 자산입니다.<br>
-    거래소별 정책은 수시로 변경될 수 있으므로, 반드시 각 거래소의 공식 공지를 확인하세요.<br>
-    모든 투자 판단과 그에 따른 결과는 투자자 본인에게 있습니다.
+<!-- ── 우측: 결과 ── -->
+<div>
+  <div class="result-cards" id="resultCards"></div>
+  <div class="chart-wrap">
+    <h3>📊 연도별 자산 증가 추이</h3>
+    <canvas id="chart" height="300"></canvas>
+  </div>
+  <div style="margin-top:16px" class="panel">
+    <h2>📋 연도별 상세 (5년 단위)</h2>
+    <div class="breakdown-table" id="breakdown"></div>
+  </div>
+</div>
+</div>
+
+<div style="margin-top:30px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;max-width:1200px">
+  <h3 style="margin-bottom:12px">⚠️ 투자자 유의사항</h3>
+  <p style="color:var(--muted);font-size:.85rem">
+    본 시뮬레이터는 가상 수익률을 가정한 교육 목적의 도구이며, 실제 투자 성과를 보장하지 않습니다.<br>
+    모든 투자는 원금 손실 가능성이 있으며, 과거 수익률이 미래 수익률을 보장하지 않습니다.<br>
+    세율은 2026년 기준이므로 향후 변경될 수 있습니다. 실제 투자 전 세무사와 상담하세요.
   </p>
 </div>
 
 <footer>
   © 2026 크립토 유의종목 알림 · 
   <a href="https://github.com/hwan7256/crypto-alert" target="_blank">GitHub</a> · 
-  무료 정적 호스팅으로 운영됩니다.
+  <a href="/privacy.html">개인정보처리방침</a>
 </footer>
-
 </div>
+
+<script>
+const ETF_DATA = [
+  {id:'SPY',   name:'S&P500',      desc:'미국 대형주 500', yr:9.8, div:1.5, region:'US',   currency:'USD'},
+  {id:'QQQ',   name:'나스닥100',    desc:'미국 기술주 중심', yr:12.5,div:0.7, region:'US',   currency:'USD'},
+  {id:'VTI',   name:'미국 전체',    desc:'뱅가드 토탈마켓', yr:9.5, div:1.4, region:'US',   currency:'USD'},
+  {id:'SCHD',  name:'미국 배당',    desc:'고배당 가치주',   yr:6.5, div:3.8, region:'US',   currency:'USD'},
+  {id:'VXUS',  name:'글로벌(미국外)',desc:'전세계 분산',    yr:5.5, div:3.2, region:'Global',currency:'USD'},
+  {id:'VT',    name:'전세계(올인원)',desc:'VT 올인원',       yr:8.0, div:2.2, region:'Global',currency:'USD'},
+  {id:'TIGER', name:'TIGER S&P500', desc:'한국판 S&P500',   yr:9.0, div:1.3, region:'KR',   currency:'KRW'},
+  {id:'KODEX', name:'KODEX 나스닥', desc:'한국판 나스닥100', yr:11.0,div:0.6, region:'KR',   currency:'KRW'},
+  {id:'ACE',   name:'ACE 미국배당', desc:'한국판 SCHD',      yr:6.0, div:4.2, region:'KR',   currency:'KRW'},
+  {id:'TIG_US',name:'TIGER 미국30년',desc:'미국 장기국채',   yr:3.5, div:4.5, region:'US',   currency:'USD'},
+];
+
+const ACCOUNT_TYPES = [
+  {id:'general',  title:'일반계좌',  desc:'세금 15.4%',     taxDiv:0.154, taxGain:0,    limit:Infinity, taxDeferred:false},
+  {id:'isa',      title:'ISA',       desc:'200만원 비과세',   taxDiv:0,     taxGain:0.154,limit:2000000,  taxDeferred:false},
+  {id:'irp',      title:'IRP',       desc:'과세이연·세액공제',taxDiv:0,     taxGain:0.154,limit:1800000,  taxDeferred:true},
+  {id:'pension',  title:'연금저축',  desc:'과세이연·세액공제',taxDiv:0,     taxGain:0.055,limit:1800000,  taxDeferred:true},
+  {id:'isa_kr',   title:'ISA(국내)', desc:'국내상장 400만원', taxDiv:0,     taxGain:0,    limit:4000000,  taxDeferred:false},
+];
+
+let selectedEtfs = new Set(['SPY','QQQ']);
+let selectedAccount = 'general';
+let chart = null;
+
+function buildUI(){
+  const etfList = document.getElementById('etfList');
+  ETF_DATA.forEach(e=>{
+    const chip = document.createElement('div');
+    chip.className = 'etf-chip' + (selectedEtfs.has(e.id)?' selected':'');
+    chip.innerHTML = `<span class="check">✓</span><span class="name">${e.name}</span><span class="yield">배당 ${e.div}%</span>`;
+    chip.onclick = ()=>{
+      if(selectedEtfs.has(e.id)) selectedEtfs.delete(e.id); else selectedEtfs.add(e.id);
+      chip.classList.toggle('selected');
+      updateSim();
+    };
+    etfList.appendChild(chip);
+  });
+
+  const tabs = document.getElementById('accountTabs');
+  ACCOUNT_TYPES.forEach(a=>{
+    const tab = document.createElement('div');
+    tab.className = 'account-tab' + (a.id===selectedAccount?' selected':'');
+    tab.innerHTML = `<span class="title">${a.title}</span><span class="desc">${a.desc}</span>`;
+    tab.onclick = ()=>{
+      document.querySelectorAll('.account-tab').forEach(t=>t.classList.remove('selected'));
+      tab.classList.add('selected');
+      selectedAccount = a.id;
+      updateSim();
+    };
+    tabs.appendChild(tab);
+  });
+}
+
+function updateSim(){
+  const years = +document.getElementById('years').value;
+  const monthly = +document.getElementById('monthly').value * 10000;
+  const annualReturn = +document.getElementById('returnRate').value / 100;
+  const divYield = +document.getElementById('divRate').value / 100;
+  const acc = ACCOUNT_TYPES.find(a=>a.id===selectedAccount);
+
+  document.getElementById('yearsVal').textContent = years+'년';
+  document.getElementById('monthlyVal').textContent = (+document.getElementById('monthly').value)+'만원';
+  document.getElementById('rateVal').textContent = (+document.getElementById('returnRate').value)+'%';
+  document.getElementById('divRateVal').textContent = (+document.getElementById('divRate').value)+'%';
+
+  // 선택된 ETF 계산
+  const etfs = [...selectedEtfs].map(id=>ETF_DATA.find(e=>e.id===id));
+  if(etfs.length===0) etfs.push(ETF_DATA[0]); // fallback
+  const avgDiv = etfs.reduce((s,e)=>s+e.div,0)/etfs.length/100;
+
+  // 시뮬레이션
+  let totalInvested = 0;
+  let balance = 0;
+  let cumulativeDiv = 0;
+  let cumulativeTaxDiv = 0;
+  const points = [];
+
+  for(let y=1; y<=years; y++){
+    for(let m=0; m<12; m++){
+      balance += monthly;
+      totalInvested += monthly;
+      // 월복리
+      const monthlyReturn = annualReturn / 12;
+      const monthlyDiv = (balance * (avgDiv / 12));
+      balance += balance * monthlyReturn;
+      cumulativeDiv += monthlyDiv;
+      // 과세 배당: ISA면 한도까지 비과세, 초과분은 과세
+      const taxableDivThisYear = (acc.taxDiv===0) ? 0 : Math.max(0, cumulativeDiv - acc.limit);
+      if(taxableDivThisYear > 0 && y===Math.floor(y)){
+        // 연말 정산 개념
+      }
+      balance += monthlyDiv; // 배당 재투자
+    }
+    // 연말 배당 과세 계산 (단순화)
+    const annualDividend = balance * avgDiv;
+    let divTax = 0;
+    if(acc.id==='isa'){
+      const overLimit = Math.max(0, annualDividend - (acc.limit/years));
+      divTax = overLimit * acc.taxGain;
+    }else if(acc.id==='isa_kr'){
+      divTax = 0; // 전액 비과세 (한도 내)
+    }else if(acc.taxDeferred){
+      divTax = 0; // 과세이연
+    }else{
+      divTax = annualDividend * acc.taxDiv;
+    }
+    cumulativeTaxDiv += divTax;
+    balance -= divTax;
+
+    if(y % 5 === 0 || y === years || y === 1){
+      points.push({year:y, invested:totalInvested, balance:Math.round(balance), div:Math.round(cumulativeDiv), tax:Math.round(cumulativeTaxDiv)});
+    }
+  }
+
+  // 과세이연 계좌: 인출 시 세금
+  let finalTax = 0;
+  if(acc.taxDeferred){
+    const gain = balance - totalInvested;
+    finalTax = Math.round(gain * acc.taxGain);
+  }
+
+  const finalBalance = Math.round(balance - finalTax);
+  const totalGain = finalBalance - totalInvested;
+  const roi = totalInvested>0 ? ((totalGain/totalInvested)*100).toFixed(1) : 0;
+
+  // 결과 카드
+  document.getElementById('resultCards').innerHTML = `
+    <div class="r-card"><div class="label">💰 총 투자금</div><div class="value value-blue">${(totalInvested/10000).toLocaleString()}만</div></div>
+    <div class="r-card"><div class="label">📈 최종 자산</div><div class="value value-green">${(finalBalance/10000).toLocaleString()}만</div><div class="sub">ROI ${roi}%</div></div>
+    <div class="r-card"><div class="label">💸 누적 배당금</div><div class="value value-yellow">${(Math.round(cumulativeDiv)/10000).toLocaleString()}만</div></div>
+    <div class="r-card"><div class="label">🏛 절감 세금</div><div class="value value-purple">${acc.id==='general'?'0':(Math.round(cumulativeDiv*0.154-finalTax)/10000).toLocaleString()+((Math.round(cumulativeDiv*0.154-finalTax)/10000)>0?'만':'만')}</div><div class="sub">vs 일반계좌</div></div>
+  `;
+
+  // 차트
+  if(chart) chart.destroy();
+  const ctx = document.getElementById('chart').getContext('2d');
+  const chartData = [];
+  for(let y=1; y<=years; y++){
+    let b=0, inv=0;
+    for(let m=0; m<12*y; m++){
+      b+=monthly; inv+=monthly;
+      b+=b*(annualReturn/12); b+=b*(avgDiv/12);
+    }
+    b-=finalTax*(y/years); // 비례 배분
+    const div = b*avgDiv;
+    let dt=0;
+    if(!acc.taxDeferred && acc.taxDiv>0) dt=div*acc.taxDiv;
+    b-=dt;
+    chartData.push({x:y, y:Math.round(b/10000)});
+  }
+  chart = new Chart(ctx,{
+    type:'line',
+    data:{
+      datasets:[
+        {label:'예상 자산 (만원)',data:chartData,borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,0.1)',fill:true,tension:0.3,pointRadius:3},
+        {label:'총 투자원금',data:chartData.map((p,i)=>({x:p.x,y:(monthly*12*(i+1))/10000})),borderColor:'#94a3b8',borderDash:[5,5],pointRadius:0,fill:false,tension:0},
+      ]
+    },
+    options:{
+      responsive:true,
+      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}}},
+      scales:{
+        x:{type:'linear',title:{text:'연도',display:true,color:'#94a3b8'},ticks:{color:'#94a3b8',callback:v=>v+'년'},grid:{color:'#1e293b'}},
+        y:{title:{text:'만원',display:true,color:'#94a3b8'},ticks:{color:'#94a3b8',callback:v=>(v/10000).toFixed(0)+'억'},grid:{color:'#1e293b'}}
+      }
+    }
+  });
+
+  // 상세 테이블
+  let tableHtml = `<table><thead><tr><th>연도</th><th>투자원금</th><th>자산</th><th>누적배당</th><th>납부세금</th><th>순수익</th></tr></thead><tbody>`;
+  points.forEach(p=>{
+    tableHtml += `<tr><td>${p.year}년차</td><td>${(p.invested/10000).toLocaleString()}만</td><td>${(p.balance/10000).toLocaleString()}만</td><td>${(Math.round(p.div)/10000).toLocaleString()}만</td><td>${(p.tax/10000).toLocaleString()}만</td><td class="saved">${((p.balance-p.invested-p.tax)/10000).toLocaleString()}만</td></tr>`;
+  });
+  tableHtml += `<tr><td><strong>최종</strong></td><td><strong>${(totalInvested/10000).toLocaleString()}만</strong></td><td><strong>${(finalBalance/10000).toLocaleString()}만</strong></td><td><strong>${(Math.round(cumulativeDiv)/10000).toLocaleString()}만</strong></td><td><strong>${(Math.round(cumulativeTaxDiv+finalTax)/10000).toLocaleString()}만</strong></td><td class="saved"><strong>${(totalGain/10000).toLocaleString()}만</strong></td></tr></tbody></table>`;
+  document.getElementById('breakdown').innerHTML = tableHtml;
+}
+
+buildUI();
+updateSim();
+</script>
 </body>
 </html>
