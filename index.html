@@ -100,7 +100,62 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 
 footer{text-align:center;padding:40px 0;color:var(--muted);font-size:.8rem;border-top:1px solid var(--border);margin-top:40px}
 footer a{color:var(--blue);text-decoration:none}
-@media(max-width:600px){.result-cards{grid-template-columns:1fr 1fr}}
+
+/* ========== MOBILE (< 768px) ========== */
+@media(max-width:768px){
+  .container{padding:12px}
+  header{padding:30px 0 15px}
+  header h1{font-size:1.6rem}
+  header .subtitle{font-size:.9rem}
+  nav{margin-top:12px}
+  nav a{margin:0 6px;font-size:.85rem}
+
+  .simulator-section{margin:30px 0}
+  .simulator-section h2{font-size:1.3rem}
+  .grid{grid-template-columns:1fr;gap:12px}
+  .panel{padding:16px}
+  .panel h2{font-size:1rem;margin-bottom:12px}
+
+  .etf-chip{padding:6px 10px;font-size:.78rem}
+
+  .account-tabs{gap:4px}
+  .account-tab{padding:8px 4px;font-size:.7rem;min-width:60px}
+
+  .result-cards{grid-template-columns:1fr 1fr;gap:8px}
+  .r-card{padding:12px}
+  .r-card .value{font-size:1.3rem}
+
+  .chart-wrap{padding:12px}
+  .breakdown-table table{font-size:.7rem}
+  .breakdown-table th,.breakdown-table td{padding:6px 8px}
+
+  .post-grid{grid-template-columns:1fr;gap:12px}
+  .post-card .card-img{height:100px;font-size:2rem}
+  .post-card h3{font-size:1rem}
+  .post-card p{font-size:.8rem}
+  .post-card .card-body{padding:14px}
+
+  .blog-section h2{font-size:1.3rem}
+  .faq-section{padding:16px}
+  .faq-section h2{font-size:1.2rem}
+  .faq-item h3{font-size:.9rem}
+  .faq-item p{font-size:.8rem}
+
+  .cta-box{padding:24px 16px}
+  .cta-box h2{font-size:1.3rem}
+  .cta-box .cta-btn{padding:10px 24px;font-size:1rem}
+
+  footer{padding:20px 0;font-size:.7rem}
+}
+
+/* ========== SMALL PHONE (< 400px) ========== */
+@media(max-width:400px){
+  header h1{font-size:1.35rem}
+  nav a{font-size:.75rem;margin:0 4px}
+  .result-cards{grid-template-columns:1fr}
+  .etf-chip{font-size:.7rem;padding:5px 8px}
+  .account-tab{font-size:.65rem;min-width:50px}
+}
 </style>
 </head>
 <body>
