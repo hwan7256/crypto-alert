@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hwan7256.github.io/crypto-alert/sitemap.xml
