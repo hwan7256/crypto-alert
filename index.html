@@ -193,7 +193,7 @@ footer a{color:var(--blue);text-decoration:none}
     <div class="range-value" id="monthlyVal">50만원</div>
     <label>계좌 유형</label>
     <div class="account-tabs" id="accountTabs"></div>
-    <label>연평균 수익률 가정</label>
+    <label>연평균 수익률 가정 <button onclick="useHistoricalReturn()" style="font-size:.7rem;background:var(--blue);color:#fff;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;margin-left:8px">과거 평균 적용</button></label>
     <input type="range" id="returnRate" min="3" max="20" value="8" step="0.5" oninput="updateSim()">
     <div class="range-value" id="rateVal">8%</div>
     <div id="divInfo" style="margin-top:16px;background:var(--bg);border-radius:8px;padding:12px;font-size:.85rem;color:var(--muted)">
@@ -413,6 +413,13 @@ function formatKRW(won){
   if(Math.abs(won) >= 100000000) return (won/100000000).toFixed(1).replace(/\.0$/,'')+'억원';
   if(Math.abs(won) >= 10000) return Math.round(won/10000).toLocaleString()+'만원';
   return won.toLocaleString()+'원';
+}
+function useHistoricalReturn(){
+  const etfs = [...selectedEtfs].map(id=>ETF_DATA.find(e=>e.id===id));
+  if(etfs.length===0) return;
+  const avgYr = etfs.reduce((s,e)=>s+e.yr,0)/etfs.length;
+  document.getElementById('returnRate').value = Math.round(avgYr*2)/2;
+  updateSim();
 }
 function updateSim(){
   const years = +document.getElementById('years').value;
