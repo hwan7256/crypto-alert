@@ -22,8 +22,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans KR',sans
 header{text-align:center;padding:60px 0 30px}
 header h1{font-size:2.4rem;margin-bottom:12px;background:linear-gradient(135deg,var(--green),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 header .subtitle{color:var(--muted);font-size:1.1rem}
-nav{margin-top:20px}
-nav a{color:var(--blue);text-decoration:none;margin:0 12px;font-weight:600}
+nav{margin-top:20px;display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+nav a{color:var(--blue);text-decoration:none;margin:0 6px;font-weight:600;white-space:nowrap}
 nav a:hover{text-decoration:underline}
 
 /* Blog post cards */
@@ -107,8 +107,8 @@ footer a{color:var(--blue);text-decoration:none}
   header{padding:30px 0 15px}
   header h1{font-size:1.6rem}
   header .subtitle{font-size:.9rem}
-  nav{margin-top:12px}
-  nav a{margin:0 6px;font-size:.85rem}
+  nav{margin-top:12px;display:flex;flex-wrap:wrap;justify-content:center;gap:4px}
+  nav a{margin:0;font-size:.78rem;padding:4px 7px;white-space:nowrap}
 
   .simulator-section{margin:30px 0}
   .simulator-section h2{font-size:1.3rem}
@@ -151,7 +151,7 @@ footer a{color:var(--blue);text-decoration:none}
 /* ========== SMALL PHONE (< 400px) ========== */
 @media(max-width:400px){
   header h1{font-size:1.35rem}
-  nav a{font-size:.75rem;margin:0 4px}
+  nav a{font-size:.7rem;margin:0;padding:3px 5px}
   .result-cards{grid-template-columns:1fr}
   .etf-chip{font-size:.7rem;padding:5px 8px}
   .account-tab{font-size:.65rem;min-width:50px}
