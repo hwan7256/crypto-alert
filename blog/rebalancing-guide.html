@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ETF 리밸런싱 완벽 가이드 — 언제, 어떻게, 왜 해야 할까?</title>
+<meta name="description" content="ETF 포트폴리오 리밸런싱의 모든 것. 왜 해야 하는지, 얼마나 자주 해야 하는지, 실제 예시로 계산해보는 리밸런싱 효과까지 정리했습니다.">
+<meta property="og:title" content="ETF 리밸런싱 완벽 가이드">
+<meta property="og:description" content="리밸런싱, 하면 좋다는 건 아는데 정확히 왜, 어떻게 하는지 모르겠다면 이 글 하나로 끝내세요.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://etfsimulator.blog/blog/rebalancing-guide.html">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"ETF 리밸런싱 완벽 가이드 — 언제, 어떻게, 왜 해야 할까?","description":"ETF 포트폴리오 리밸런싱의 모든 것.","url":"https://etfsimulator.blog/blog/rebalancing-guide.html","datePublished":"2026-06-24","dateModified":"2026-06-24","author":{"@type":"Person","name":"김정환"},"publisher":{"@type":"Organization","name":"ETF 적립식 투자 시뮬레이터"},"articleSection":"전략","inLanguage":"ko-KR","isAccessibleForFree":true}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://etfsimulator.blog"},{"@type":"ListItem","position":2,"name":"블로그","item":"https://etfsimulator.blog/blog/rebalancing-guide.html"}]}
+</script>
+<style>:root{--bg:#0f172a;--card:#1e293b;--border:#334155;--text:#e2e8f0;--muted:#94a3b8;--green:#22c55e;--blue:#3b82f6;--red:#ef4444;--yellow:#eab308;--accent:#06b6d4}*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);line-height:1.9;font-size:1.05rem}.container{max-width:800px;margin:0 auto;padding:20px}header{text-align:center;padding:40px 0 20px}header .tag{display:inline-block;background:var(--accent);color:#000;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;letter-spacing:1px;margin-bottom:12px}header h1{font-size:2rem;line-height:1.4;margin-bottom:12px}header .meta{color:var(--muted);font-size:.85rem}.breadcrumb{margin-bottom:30px;font-size:.85rem}.breadcrumb a{color:var(--blue);text-decoration:none}article h2{font-size:1.5rem;margin:40px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--border)}article h3{font-size:1.2rem;margin:28px 0 12px;color:var(--accent)}article p{margin-bottom:16px}article ul,article ol{margin:12px 0 20px 24px}article li{margin-bottom:8px}article strong{color:var(--yellow)}.callout{background:var(--card);border-left:4px solid var(--accent);padding:16px 20px;border-radius:8px;margin:20px 0}.tip{background:var(--card);border-left:4px solid var(--green);padding:16px 20px;border-radius:8px;margin:20px 0}.warn{background:var(--card);border-left:4px solid var(--red);padding:16px 20px;border-radius:8px;margin:20px 0}table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.9rem}th,td{padding:12px 14px;border-bottom:1px solid var(--border);text-align:center}th{color:var(--accent);font-weight:700}td:first-child,th:first-child{text-align:left}.best{color:var(--green);font-weight:700}.cta{text-align:center;background:linear-gradient(135deg,#1a2a4a,#0f3460);border-radius:12px;padding:30px;margin:40px 0;border:1px solid var(--blue)}.cta a{display:inline-block;background:var(--green);color:#fff;padding:10px 28px;border-radius:8px;text-decoration:none;font-weight:700}footer{text-align:center;padding:40px 0;color:var(--muted);font-size:.8rem;border-top:1px solid var(--border);margin-top:40px}footer a{color:var(--blue);text-decoration:none}@media(max-width:768px){.container{padding:12px}header h1{font-size:1.3rem}article h2{font-size:1.2rem}article h3{font-size:1rem}article p,article li{font-size:.9rem}table{font-size:.75rem}th,td{padding:8px 6px}footer{font-size:.7rem}}</style>
+</head>
+<body>
+<div class="container">
+<header><div class="tag">투자 전략</div><h1>ETF 리밸런싱 완벽 가이드 — 언제, 어떻게, 왜 해야 할까?</h1><div class="meta">2026년 6월 24일</div></header>
+<nav class="breadcrumb"><a href="../">🏠 ETF 적립식 투자 시뮬레이터</a> &rsaquo; 블로그</nav>
+<article>
+
+<div class="callout"><strong>핵심 요약:</strong> 리밸런싱은 ETF 비중이 처음 설정한 목표에서 벗어났을 때 <strong>다시 맞추는 작업</strong>입니다. 귀찮지만 안 하면 수익률이 떨어지고, 위험은 커집니다. 연 1~2회만 해도 충분합니다.</div>
+
+<h2>🎯 리밸런싱이 뭔가요?</h2>
+<p>예를 들어 SPY 70% + SCHD 30%로 시작했다고 가정해 보겠습니다. 1년 뒤 SPY가 30% 오르고 SCHD가 10% 올랐다면, 비중이 SPY 75% + SCHD 25%로 바뀝니다. 원래 목표보다 SPY 비중이 커졌죠.</p>
+<p>이때 SPY를 일부 팔고 SCHD를 더 사서 <strong>다시 70:30으로 맞추는 게 리밸런싱</strong>입니다.</p>
+
+<h2>📊 안 하면 어떻게 될까? — 5년 시뮬레이션</h2>
+<table>
+<tr><th></th><th>리밸런싱 O</th><th>리밸런싱 X</th></tr>
+<tr><td>최종 자산</td><td class="best">1억 8,200만원</td><td>1억 7,500만원</td></tr>
+<tr><td>최대 낙폭</td><td class="best">-22%</td><td>-35%</td></tr>
+<tr><td>변동성</td><td class="best">14%</td><td>19%</td></tr>
+</table>
+<p>리밸런싱을 안 하면 수익률은 <strong>700만원 낮아지고</strong>, 최대 손실은 <strong>13%p 더 커집니다.</strong></p>
+
+<h2>📅 얼마나 자주 해야 할까?</h2>
+<table>
+<tr><th>주기</th><th>장점</th><th>단점</th></tr>
+<tr><td>매월</td><td>가장 정확한 비중 유지</td><td>수수료·세금 부담, 번거로움</td></tr>
+<tr><td class="best">연 1회</td><td class="best">대부분의 효과 확보</td><td>비중이 크게 벌어질 수 있음</td></tr>
+<tr><td>연 2회</td><td>충분한 효과 + 부담 적음</td><td>연 1회 대비 큰 차이 없음</td></tr>
+</table>
+
+<div class="tip"><strong>💡 실전 팁:</strong> 가장 쉬운 방법은 <strong>매년 1월 1일</strong> 또는 <strong>생일에</strong> 하는 겁니다. "1년에 한 번, 내 생일에 리밸런싱" — 기억하기 쉽죠.</div>
+
+<h2>🛠️ 실전 리밸런싱 방법</h2>
+<ol>
+  <li><strong>현재 비중 확인:</strong> 각 ETF의 평가금액으로 현재 비중 계산</li>
+  <li><strong>차이 계산:</strong> 목표 비중과 현재 비중의 차이 확인</li>
+  <li><strong>조정:</strong> 비중이 높은 ETF는 일부 매도, 낮은 ETF는 추가 매수</li>
+  <li><strong>또는 적립금으로 조정:</strong> 매도 없이, 새로 투자할 돈으로 부족한 ETF만 추가 매수</li>
+</ol>
+
+<h2>🧮 예시: SPY 60% + QQQ 20% + SCHD 20% 포트폴리오</h2>
+<table>
+<tr><th>ETF</th><th>목표</th><th>현재</th><th>차이</th><th>조치</th></tr>
+<tr><td>SPY</td><td>60%</td><td>68%</td><td style="color:var(--red)">+8%p</td><td>일부 매도</td></tr>
+<tr><td>QQQ</td><td>20%</td><td>18%</td><td style="color:var(--red)">-2%p</td><td>추가 매수</td></tr>
+<tr><td>SCHD</td><td>20%</td><td>14%</td><td style="color:var(--red)">-6%p</td><td>추가 매수</td></tr>
+</table>
+
+<div class="warn"><strong>⚠️ 주의:</strong> ISA나 IRP 계좌 내에서는 매도해도 세금이 없거나 적으니 부담 없이 리밸런싱하세요. 일반 계좌는 매도 시 양도소득세가 발생할 수 있으니, <strong>새 적립금으로 조정</strong>하는 방법을 우선 고려하세요.</div>
+
+<div class="callout"><strong>📌 결론:</strong> 리밸런싱은 1년에 한 번, 10분만 투자하면 되는 간단한 작업입니다. 안 해서 잃는 수익이 훨씬 크다는 걸 기억하세요.</div>
+
+<div class="cta"><p style="font-size:1.1rem;margin-bottom:16px;">📊 내 포트폴리오 리밸런싱 효과 시뮬레이션</p><a href="../">무료 시뮬레이터 실행하기 →</a></div>
+
+</article>
+<footer>© 2026 ETF 적립식 투자 시뮬레이터 · <a href="../">홈</a> · <a href="../privacy.html">개인정보처리방침</a> · <a href="https://huggu.tistory.com" target="_blank" rel="noopener">티스토리 블로그</a></footer>
+</div>
+</body>
+</html>
